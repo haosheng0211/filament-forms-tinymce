@@ -1,10 +1,14 @@
 {
     "name": "haosheng0211/filament-forms-tinymce",
-    "description": "This is my package filament-forms-tinymce",
+    "description": "A Filament v3 form field that integrates TinyMCE 8 rich text editor with dark mode, profiles, and file browser support.",
     "keywords": [
-        "MrJin",
         "laravel",
-        "filament-forms-tinymce"
+        "filament",
+        "tinymce",
+        "rich-text-editor",
+        "wysiwyg",
+        "form-field",
+        "filament-plugin"
     ],
     "homepage": "https://github.com/haosheng0211/filament-forms-tinymce",
     "license": "MIT",
@@ -65,6 +69,6 @@
             ]
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

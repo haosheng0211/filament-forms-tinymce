@@ -30,9 +30,11 @@ jobs:
           coverage: none
 
       - name: Install dependencies
+        shell: bash
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
           composer update --prefer-dist --no-interaction --no-audit
 
       - name: Run tests
+        shell: bash
         run: vendor/bin/pest

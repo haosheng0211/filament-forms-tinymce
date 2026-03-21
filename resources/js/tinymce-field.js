@@ -62,6 +62,7 @@ export default function tinymceField({
                         mediaType: meta.filetype,
                         disk: mediaDisk,
                         directory: mediaDirectory,
+                        storeAsUrl: true,
                     });
                 };
 

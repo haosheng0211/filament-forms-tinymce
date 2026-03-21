@@ -49,6 +49,10 @@ return [
             'toolbar' => 'undo redo | blocks | bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist | link image media | table code | removeformat',
             'menubar' => false,
             'height' => 480,
+            'custom_configs' => [
+                'relative_urls' => false,
+                'remove_script_host' => true,
+            ],
         ],
 
         'simple' => [
@@ -63,10 +67,19 @@ return [
             'toolbar' => 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table | code fullscreen | removeformat',
             'menubar' => 'file edit view insert format tools table',
             'height' => 600,
-            'custom_configs' => [
-                // Example: 'relative_urls' => false,
-            ],
         ],
+
+        // Email templates: keep full URL (with domain) for email clients
+        // 'email' => [
+        //     'plugins' => 'lists link image media table code wordcount',
+        //     'toolbar' => 'undo redo | blocks | bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist | link image media | table code | removeformat',
+        //     'menubar' => false,
+        //     'height' => 480,
+        //     'custom_configs' => [
+        //         'relative_urls' => false,
+        //         'remove_script_host' => false,
+        //     ],
+        // ],
 
     ],
 

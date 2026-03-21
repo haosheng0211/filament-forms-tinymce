@@ -97,7 +97,11 @@ TinyMceEditor::make('content')
 
 The file browser integration is **enabled by default**. When enabled, TinyMCE's `file_picker_callback` dispatches Livewire events (`open-media-browser` / `media-selected`) so you can connect your own media browser component.
 
-> **Tip:** You can use the suggested package [`haosheng0211/filament-media-browser`](https://github.com/haosheng0211/filament-media-browser) which provides a ready-made Livewire media browser that listens for these events.
+> **Tip:** Install [`haosheng0211/filament-media-browser`](https://github.com/haosheng0211/filament-media-browser) for a ready-made media browser that works out of the box.
+
+```bash
+composer require haosheng0211/filament-media-browser
+```
 
 #### Disable file browser
 
@@ -114,6 +118,30 @@ You can specify the disk and directory to pass to the media browser:
 TinyMceEditor::make('content')
     ->mediaDisk('s3')
     ->mediaDirectory('uploads/articles')
+```
+
+#### URL format
+
+TinyMCE always requests full URLs from the media browser (`storeAsUrl: true`), regardless of the media browser's global `store_as_url` setting. The final URL format stored in HTML is controlled by TinyMCE's built-in URL conversion options:
+
+| Desired output | Configuration |
+|---|---|
+| `/storage/media/photo.jpg` (default) | `relative_urls: false`, `remove_script_host: true` |
+| `http://domain.com/storage/media/photo.jpg` | `relative_urls: false`, `remove_script_host: false` |
+| Keep original URL | `convert_urls: false` |
+
+The default profile already includes `relative_urls: false` and `remove_script_host: true`, which produces portable absolute paths without the domain.
+
+For **email templates** that require full URLs (email clients cannot resolve relative paths), use a dedicated profile or override via `options()`:
+
+```php
+// Option 1: Use a profile
+TinyMceEditor::make('email_body')
+    ->profile('email')
+
+// Option 2: Override inline
+TinyMceEditor::make('email_body')
+    ->options(['remove_script_host' => false])
 ```
 
 ### TinyMCE source
@@ -145,20 +173,19 @@ return [
             'toolbar' => 'undo redo | blocks | bold italic underline strikethrough | ...',
             'menubar' => false,
             'height' => 480,
+            'custom_configs' => [
+                'relative_urls' => false,
+                'remove_script_host' => true,
+            ],
         ],
-        'simple' => [
-            'plugins' => 'lists link',
-            'toolbar' => 'bold italic underline | bullist numlist | link | removeformat',
-            'menubar' => false,
-            'height' => 300,
-        ],
-        'full' => [
-            'plugins' => 'lists link image media table code wordcount fullscreen searchreplace visualblocks',
-            'toolbar' => 'undo redo | blocks fontfamily fontsize | ...',
-            'menubar' => 'file edit view insert format tools table',
-            'height' => 600,
-            'custom_configs' => [],
-        ],
+        'simple' => [ /* ... */ ],
+        'full'   => [ /* ... */ ],
+        // 'email' => [
+        //     'custom_configs' => [
+        //         'relative_urls' => false,
+        //         'remove_script_host' => false,
+        //     ],
+        // ],
     ],
 ];
 ```

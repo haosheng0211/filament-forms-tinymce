@@ -6,7 +6,8 @@ All notable changes to `filament-forms-tinymce` will be documented in this file.
 
 - Add merge tags support for email templates — insert predefined variables (e.g. `{{user.name}}`) via toolbar dropdown
 - Support nested menu groups for merge tags
-- Customizable prefix/suffix (`mergetagPrefix()`, `mergetagSuffix()`)
+- Merge tags configurable via profile (`mergetags`, `mergetag_prefix`, `mergetag_suffix`) or instance methods
+- Priority: instance method > profile setting
 - No TinyMCE Premium required — implemented as a custom toolbar button
 
 ## 1.1.0 - 2026-03-21

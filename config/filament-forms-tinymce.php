@@ -34,7 +34,7 @@ return [
     | Per-instance method calls (e.g. ->toolbar()) still take highest priority.
     |
     | Supported keys: toolbar, plugins, menubar, height, skin, content_css,
-    | language, custom_configs.
+    | language, custom_configs, mergetags, mergetag_prefix, mergetag_suffix.
     |
     | 'custom_configs' accepts an associative array of arbitrary TinyMCE
     | init options that will be merged into the final config. This is useful

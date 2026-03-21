@@ -44,9 +44,9 @@ class TinyMceEditor extends Field
     // Merge tags
     protected array|Closure $mergetags = [];
 
-    protected string|Closure $mergetagPrefix = '{{';
+    protected string|Closure|null $mergetagPrefix = null;
 
-    protected string|Closure $mergetagSuffix = '}}';
+    protected string|Closure|null $mergetagSuffix = null;
 
     // --- TinyMCE Option Setters ---
 
@@ -280,17 +280,23 @@ class TinyMceEditor extends Field
 
     public function getMergetags(): array
     {
-        return $this->evaluate($this->mergetags);
+        $tags = $this->evaluate($this->mergetags);
+
+        return ! empty($tags) ? $tags : ($this->getProfileConfig()['mergetags'] ?? []);
     }
 
     public function getMergetagPrefix(): string
     {
-        return $this->evaluate($this->mergetagPrefix);
+        return $this->evaluate($this->mergetagPrefix)
+            ?? $this->getProfileConfig()['mergetag_prefix']
+            ?? '{{';
     }
 
     public function getMergetagSuffix(): string
     {
-        return $this->evaluate($this->mergetagSuffix);
+        return $this->evaluate($this->mergetagSuffix)
+            ?? $this->getProfileConfig()['mergetag_suffix']
+            ?? '}}';
     }
 
     // --- Config Builder ---

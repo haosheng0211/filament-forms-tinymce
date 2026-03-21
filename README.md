@@ -148,32 +148,55 @@ TinyMceEditor::make('email_body')
 
 Insert predefined variables into the editor via a toolbar dropdown — useful for email templates. No TinyMCE Premium required.
 
-Add `mergetags` to your toolbar and define the variable list:
+#### Via profile (recommended)
+
+Define merge tags in a profile so all fields using that profile share the same variables:
+
+```php
+// config/filament-forms-tinymce.php
+'profiles' => [
+    'email' => [
+        'plugins' => 'lists link image media table code wordcount',
+        'toolbar' => 'undo redo | blocks | bold italic | mergetags | link image | removeformat',
+        'menubar' => false,
+        'height' => 480,
+        'mergetags' => [
+            ['value' => 'user.name', 'title' => '使用者名稱'],
+            ['value' => 'user.email', 'title' => '使用者信箱'],
+            ['title' => '網站', 'menu' => [
+                ['value' => 'site.name', 'title' => '網站名稱'],
+                ['value' => 'site.url', 'title' => '網站網址'],
+            ]],
+        ],
+        'mergetag_prefix' => '{{',  // optional, defaults to '{{'
+        'mergetag_suffix' => '}}',  // optional, defaults to '}}'
+        'custom_configs' => [
+            'relative_urls' => false,
+            'remove_script_host' => false,
+        ],
+    ],
+],
+```
 
 ```php
 TinyMceEditor::make('email_body')
-    ->toolbar('undo redo | blocks | bold italic | mergetags | link image | removeformat')
-    ->mergetags([
-        ['value' => 'user.name', 'title' => '使用者名稱'],
-        ['value' => 'user.email', 'title' => '使用者信箱'],
-        ['title' => '網站', 'menu' => [
-            ['value' => 'site.name', 'title' => '網站名稱'],
-            ['value' => 'site.url', 'title' => '網站網址'],
-        ]],
-    ])
+    ->profile('email')
 ```
 
 Selecting "使用者名稱" inserts `{{user.name}}` into the editor.
 
-#### Custom prefix & suffix
+#### Via instance methods
+
+Instance methods take priority over profile settings:
 
 ```php
 TinyMceEditor::make('email_body')
-    ->mergetagPrefix('${')
-    ->mergetagSuffix('}')
+    ->toolbar('undo redo | blocks | bold italic | mergetags | removeformat')
     ->mergetags([
         ['value' => 'user.name', 'title' => 'User Name'],
     ])
+    ->mergetagPrefix('${')
+    ->mergetagSuffix('}')
 // Inserts: ${user.name}
 ```
 

@@ -12,6 +12,9 @@
             crossorigin: @js(config('filament-forms-tinymce.crossorigin', 'anonymous')),
             mediaDisk: @js($getMediaDisk()),
             mediaDirectory: @js($getMediaDirectory()),
+            mergetags: @js($getMergetags()),
+            mergetagPrefix: @js($getMergetagPrefix()),
+            mergetagSuffix: @js($getMergetagSuffix()),
             readonly: @js($isDisabled() || $isReadOnly()),
         })"
         wire:ignore

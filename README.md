@@ -144,6 +144,39 @@ TinyMceEditor::make('email_body')
     ->options(['remove_script_host' => false])
 ```
 
+### Merge tags
+
+Insert predefined variables into the editor via a toolbar dropdown — useful for email templates. No TinyMCE Premium required.
+
+Add `mergetags` to your toolbar and define the variable list:
+
+```php
+TinyMceEditor::make('email_body')
+    ->toolbar('undo redo | blocks | bold italic | mergetags | link image | removeformat')
+    ->mergetags([
+        ['value' => 'user.name', 'title' => '使用者名稱'],
+        ['value' => 'user.email', 'title' => '使用者信箱'],
+        ['title' => '網站', 'menu' => [
+            ['value' => 'site.name', 'title' => '網站名稱'],
+            ['value' => 'site.url', 'title' => '網站網址'],
+        ]],
+    ])
+```
+
+Selecting "使用者名稱" inserts `{{user.name}}` into the editor.
+
+#### Custom prefix & suffix
+
+```php
+TinyMceEditor::make('email_body')
+    ->mergetagPrefix('${')
+    ->mergetagSuffix('}')
+    ->mergetags([
+        ['value' => 'user.name', 'title' => 'User Name'],
+    ])
+// Inserts: ${user.name}
+```
+
 ### TinyMCE source
 
 TinyMCE is loaded from jsDelivr CDN with SRI integrity check. No API key required.

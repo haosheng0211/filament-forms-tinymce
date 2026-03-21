@@ -10,6 +10,9 @@ export default function tinymceField({
     crossorigin,
     mediaDisk,
     mediaDirectory,
+    mergetags,
+    mergetagPrefix,
+    mergetagSuffix,
     readonly,
 }) {
     return {
@@ -32,6 +35,10 @@ export default function tinymceField({
                 content_css: config.content_css ?? (dark ? 'dark' : 'default'),
                 setup: (editor) => {
                     this.editor = editor;
+
+                    if (mergetags && mergetags.length > 0) {
+                        this._registerMergetags(editor, mergetags, mergetagPrefix, mergetagSuffix);
+                    }
 
                     editor.on('init', () => {
                         if (this.state) {
@@ -84,6 +91,36 @@ export default function tinymceField({
                 if (this.editor && this.editor.getContent() !== newValue) {
                     this.editor.setContent(newValue || '');
                 }
+            });
+        },
+
+        _registerMergetags(editor, tags, prefix, suffix) {
+            const buildMenuItems = (items) => {
+                return items.map((item) => {
+                    if (item.menu) {
+                        return {
+                            type: 'nestedmenuitem',
+                            text: item.title,
+                            getSubmenuItems: () => buildMenuItems(item.menu),
+                        };
+                    }
+
+                    return {
+                        type: 'menuitem',
+                        text: item.title || item.value,
+                        onAction: () => {
+                            editor.insertContent(prefix + item.value + suffix);
+                        },
+                    };
+                });
+            };
+
+            editor.ui.registry.addMenuButton('mergetags', {
+                icon: 'addtag',
+                tooltip: 'Merge Tags',
+                fetch: (callback) => {
+                    callback(buildMenuItems(tags));
+                },
             });
         },
 

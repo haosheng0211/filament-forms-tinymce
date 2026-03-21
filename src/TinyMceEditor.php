@@ -41,6 +41,13 @@ class TinyMceEditor extends Field
 
     protected string|Closure|null $mediaDirectory = null;
 
+    // Merge tags
+    protected array|Closure $mergetags = [];
+
+    protected string|Closure $mergetagPrefix = '{{';
+
+    protected string|Closure $mergetagSuffix = '}}';
+
     // --- TinyMCE Option Setters ---
 
     public function toolbar(string|Closure|null $toolbar): static
@@ -148,6 +155,29 @@ class TinyMceEditor extends Field
         return $this;
     }
 
+    // --- Merge Tags Setters ---
+
+    public function mergetags(array|Closure $tags): static
+    {
+        $this->mergetags = $tags;
+
+        return $this;
+    }
+
+    public function mergetagPrefix(string|Closure $prefix): static
+    {
+        $this->mergetagPrefix = $prefix;
+
+        return $this;
+    }
+
+    public function mergetagSuffix(string|Closure $suffix): static
+    {
+        $this->mergetagSuffix = $suffix;
+
+        return $this;
+    }
+
     // --- Getters ---
 
     public function getToolbar(): ?string
@@ -246,6 +276,21 @@ class TinyMceEditor extends Field
     public function getMediaDirectory(): ?string
     {
         return $this->evaluate($this->mediaDirectory);
+    }
+
+    public function getMergetags(): array
+    {
+        return $this->evaluate($this->mergetags);
+    }
+
+    public function getMergetagPrefix(): string
+    {
+        return $this->evaluate($this->mergetagPrefix);
+    }
+
+    public function getMergetagSuffix(): string
+    {
+        return $this->evaluate($this->mergetagSuffix);
     }
 
     // --- Config Builder ---

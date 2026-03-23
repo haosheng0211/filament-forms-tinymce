@@ -9,6 +9,7 @@ All notable changes to `filament-forms-tinymce` will be documented in this file.
 - Merge tags configurable via profile (`mergetags`, `mergetag_prefix`, `mergetag_suffix`) or instance methods
 - Priority: instance method > profile setting
 - No TinyMCE Premium required — implemented as a custom toolbar button
+- Hide file picker button from link dialog (`file_picker_types: 'image media'`)
 
 ## 1.1.0 - 2026-03-21
 

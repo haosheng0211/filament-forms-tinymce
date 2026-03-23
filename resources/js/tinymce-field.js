@@ -61,6 +61,7 @@ export default function tinymceField({
             };
 
             if (fileBrowserEnabled && !readonly) {
+                initConfig.file_picker_types = 'image media';
                 initConfig.file_picker_callback = (callback, value, meta) => {
                     this._filePickerCallback = callback;
 
